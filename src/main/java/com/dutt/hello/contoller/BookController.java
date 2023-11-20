@@ -1,7 +1,10 @@
-package com.dutt.hello;
+package com.dutt.hello.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.dutt.hello.models.Book;
+import com.dutt.hello.repo.BookRepository;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable Long id) {
+    public Book getBookById(@PathVariable int id) {
         return bookRepository.findById(id).orElse(null);
     }
 
@@ -28,7 +31,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+    public Book updateBook(@PathVariable int id, @RequestBody Book updatedBook) {
         Book existingBook = bookRepository.findById(id).orElse(null);
         if (existingBook != null) {
             // Update existingBook with data from updatedBook
@@ -43,7 +46,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Long id) {
+    public void deleteBook(@PathVariable int id) {
         bookRepository.deleteById(id);
     }
 }
