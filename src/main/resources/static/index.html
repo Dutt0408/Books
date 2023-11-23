@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Book Management</title>
-    <!-- Include jQuery -->
+    <!-- Included jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <body>
@@ -31,7 +31,92 @@
     </table>
 
     <script>
-      // Implement AJAX functions (e.g., addBook, updateBook, deleteBook)
+      function displayBooks() {
+        $.ajax({
+          url: "/books",
+          type: "GET",
+          success: function (data) {
+            updateTable(data);
+          },
+        });
+      }
+
+      function addBook() {
+        var title = $("#title").val();
+        var author = $("#author").val();
+        var publicationYear = $("#publicationYear").val();
+
+        $.ajax({
+          url: "/books",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+            title: title,
+            author: author,
+            publicationYear: publicationYear,
+          }),
+          success: function (data) {
+            displayBooks();
+          },
+        });
+      }
+
+      function updateBook(id) {
+        var updatedTitle = prompt("Enter updated title:");
+        var updatedAuthor = prompt("Enter updated author:");
+        var updatedPublicationYear = prompt("Enter updated publication year:");
+
+        $.ajax({
+          url: "/books/" + id,
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify({
+            title: updatedTitle,
+            author: updatedAuthor,
+            publicationYear: updatedPublicationYear,
+          }),
+          success: function (data) {
+            displayBooks();
+          },
+        });
+      }
+
+      function deleteBook(id) {
+        $.ajax({
+          url: "/books/" + id,
+          type: "DELETE",
+          success: function (data) {
+            displayBooks();
+          },
+        });
+      }
+
+      function updateTable(books) {
+        var tableBody = $("#bookTableBody");
+        tableBody.empty();
+
+        $.each(books, function (index, book) {
+          tableBody.append(
+            "<tr><td>" +
+              book.id +
+              "</td><td>" +
+              book.title +
+              "</td><td>" +
+              book.author +
+              "</td><td>" +
+              book.publicationYear +
+              "</td><td><button onclick='updateBook(" +
+              book.id +
+              ")'>Update</button> <button onclick='deleteBook(" +
+              book.id +
+              ")'>Delete</button></td></tr>"
+          );
+        });
+      }
+
+      $(document).ready(function () {
+        displayBooks();
+      });
     </script>
   </body>
 </html>

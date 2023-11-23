@@ -9,26 +9,27 @@ import io.micrometer.common.lang.NonNull;
 
 import java.io.Serializable;
 
+
 import javax.persistence.*;
 
     @Entity
-    @Table(name = "Book1") // Specify the table name in the database
+    @Table(name = "Book1") 
     public class Book implements Serializable{
     
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name="bookId")// Specify the column name in the database
+        @Column(name="bookId")
         private int id;
     
-        @Column(length = 255)
-        @NonNull// Specify the column name in the database
+        @Column(name="title",length = 255)
+        @NonNull
         private String title;
     
-        @Column(length = 255)
-        @NonNull// Specify the column name in the database
+        @Column(name="author",length = 255)
+        @NonNull
         private String author;
     
-        @Column // Specify the column name in the database
+        @Column(name="publicationYear") 
         private int publicationYear;
     
 
@@ -72,4 +73,6 @@ import javax.persistence.*;
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
     }
-}
+    
+
+    }

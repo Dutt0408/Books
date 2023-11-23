@@ -34,14 +34,13 @@ public class BookController {
     public Book updateBook(@PathVariable int id, @RequestBody Book updatedBook) {
         Book existingBook = bookRepository.findById(id).orElse(null);
         if (existingBook != null) {
-            // Update existingBook with data from updatedBook
             existingBook.setTitle(updatedBook.getTitle());
             existingBook.setAuthor(updatedBook.getAuthor());
             existingBook.setPublicationYear(updatedBook.getPublicationYear());
 
             return bookRepository.save(existingBook);
         } else {
-            return null; // Handle not found case
+            return null;
         }
     }
 
